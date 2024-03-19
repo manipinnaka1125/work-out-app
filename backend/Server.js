@@ -7,7 +7,7 @@ const app = express();
 // Middleware to log request details
 app.use((req, res, next) => {
     // Log the request method and path
-    console.log(`[${new Date().toLocaleString()}] ${req.method} ${req.path}`);
+    console.log(req.path,req.method);
     
     // Pass control to the next middleware in the stack
     next();
