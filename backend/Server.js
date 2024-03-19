@@ -1,27 +1,23 @@
-// Import required modules
-const express = require('express');
+require('dotenv').config()
 
-// Create an instance of Express application
-const app = express();
+const express = require('express')
+const workoutRoutes = require('./routes/workouts')
 
-// Middleware to log request details
+// express app
+const app = express()
+
+// middleware
+app.use(express.json())
+
 app.use((req, res, next) => {
-    // Log the request method and path
-    console.log(req.path,req.method);
-    
-    // Pass control to the next middleware in the stack
-    next();
-});
+  console.log(req.path, req.method)
+  next()
+})
 
-// Define a route for the homepage
-app.get('/', (req, res) => {
-    // Send a response to the client
-    res.send('Welcome to the blog homepage!');
-});
+// routes
+app.use('/api/workouts', workoutRoutes)
 
-// Define other routes...
-
-// Start the server and listen on port 3000
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-});
+// listen for requests
+app.listen(process.env.PORT, () => {
+  console.log('listening on port', process.env.PORT)
+})
