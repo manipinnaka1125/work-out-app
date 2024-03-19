@@ -1,20 +1,27 @@
-// Load environment variables from a .env file into process.env
-require('dotenv').config();
-
-// Import the express module
+// Import required modules
 const express = require('express');
 
-// Create an Express application
+// Create an instance of Express application
 const app = express();
 
-// Define a route for the root URL '/'
-app.get('/', (req, res) => {
-    // Send a JSON response with a message
-    res.json({ message: 'Welcome to the app' });
+// Middleware to log request details
+app.use((req, res, next) => {
+    // Log the request method and path
+    console.log(`[${new Date().toLocaleString()}] ${req.method} ${req.path}`);
+    
+    // Pass control to the next middleware in the stack
+    next();
 });
 
-// Start the server and listen on the specified port from environment variables
-app.listen(process.env.PORT, () => {
-    // Log a message to the console when the server starts
-    console.log('Server is running on port:', process.env.PORT);
+// Define a route for the homepage
+app.get('/', (req, res) => {
+    // Send a response to the client
+    res.send('Welcome to the blog homepage!');
+});
+
+// Define other routes...
+
+// Start the server and listen on port 3000
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
 });
